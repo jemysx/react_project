@@ -12,9 +12,8 @@ function Login() {
     //默认是登录
     const [authMode, setAuthMode] = useState("signin")
     const config = {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization':'BearerJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1c2VyIiwiYXVkIjoiU1VOIFBFTkciLCJpYXQiOjE2NzgyNjA3OTYsImV4cCI6MTY3ODI2NDM5Niwic3ViIjoiMSJ9.Tgh8tMf0mLRAHeUVvUo5k_Hnt01diq92AiNvHX49CXI'
+      headers:{
+        'Content-Type':'application/x-www-form-urlencoded'
       }
     };
     
@@ -49,14 +48,29 @@ function Login() {
       console.log("头部信息",config);
          //做验证
      
-      // console.log("请求其返回的",config)
+   
+      //第一次登录请求
       axiosInstance.post('/api1/api/login.php',{
           username:username,
           password:password
       },config).then(response=>{
-          // console.log("shili",response)
-          setToken(response.data.jwt);
-          localStorage.setItem('token',response.data.jwt)
+          if(response.data.jwt || response.data.jwt !== undefined){
+            localStorage.setItem('token',response.data.jwt)
+            const token_first = response.data.jwt
+            //再次发送请求验证token
+            axiosInstance.get('/api1/api/jwt.php').then(function(response){
+               console.log("再次请求",response)
+               if (response.data.result === 'success') {
+                alert('登录成功');
+                //设置token
+                setToken(token_first);
+               }else{
+                  
+               }
+            })
+          }
+         
+         
       })
       .catch(error=>{
         //  console.log(error)
@@ -89,8 +103,23 @@ function Login() {
         password:password
       },config).then(response=>{
           console.log("注册",response)
-          setToken(response.data.jwt);
-          localStorage.setItem('token',response.data.jwt)
+          
+          if(response.data.jwt || response.data.jwt !== undefined){
+            localStorage.setItem('token',response.data.jwt)
+            const token_first = response.data.jwt
+            //再次发送请求验证token
+            axiosInstance.get('/api1/api/jwt.php').then(function(response){
+               console.log("再次请求",response)
+               if (response.data.result === 'success') {
+                alert('注册成功');
+                //设置token
+                setToken(token_first);
+               }else{
+                  
+               }
+            })
+          }
+          
       })
       .catch(error=>{
          console.log(error)
@@ -102,7 +131,6 @@ function Login() {
 
 
     const loggedIn = ()=>{
-       const token = localStorage.getItem('token');
        if(!token || token === 'undefined'){
         return false;
        }
@@ -154,8 +182,8 @@ function Login() {
         <div className="card-body">
             {loggedIn() ? (
             <div>
-              <p>You are logged in.</p>
-              <button onClick={handleLogout}>Logout</button>
+              <p>你已经登录,欢迎:{username}</p>
+              <button onClick={handleLogout}>退出</button>
             </div>
           ) :
             <form onSubmit={handleRegister}>
