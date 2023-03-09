@@ -48,6 +48,15 @@ function Login() {
       console.log("头部信息",config);
          //做验证
      
+      //做验证
+      if (username.length < 5 || password.length<5) {
+        setErr('用户名或者密码不能少于5位');
+        return false;
+      } else if (/[!@#$%^&*(),.?":{}|<>]/g.test(username) ||/[!@#$%^&*(),.?":{}|<>]/g.test(password)) {
+        setErr('用户名或者密码不能使用特殊符号');
+        return false;
+      }
+
    
       //第一次登录请求
       axiosInstance.post('/api1/api/login.php',{
@@ -89,8 +98,8 @@ function Login() {
       event.preventDefault();
 
       //做验证
-      if (username.length < 8 || password.length<8) {
-        setErr('用户名或者密码不能少于8位');
+      if (username.length < 5 || password.length<5) {
+        setErr('用户名或者密码不能少于5位');
         return false;
       } else if (/[!@#$%^&*(),.?":{}|<>]/g.test(username) ||/[!@#$%^&*(),.?":{}|<>]/g.test(password)) {
         setErr('用户名或者密码不能使用特殊符号');
