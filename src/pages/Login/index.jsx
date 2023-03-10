@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import qs from "qs";
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 //用函数组件进行重构
@@ -9,8 +9,8 @@ function Login() {
     const[password,setPassword] = useState('');
     const[token,setToken] = useState('');
     const[err,setErr] = useState('');
-    //默认是登录
-    const [authMode, setAuthMode] = useState("signin")
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
     const config = {
       headers:{
         'Content-Type':'application/x-www-form-urlencoded'
@@ -39,7 +39,7 @@ function Login() {
       }
     );
 
-    
+   
      //登录请求
     const handleLogin = async(event)=>{
     
@@ -70,9 +70,11 @@ function Login() {
             axiosInstance.get('/api1/api/jwt.php').then(function(response){
                console.log("再次请求",response)
                if (response.data.result === 'success') {
-                alert('登录成功');
+                alert('登录成功')
                 //设置token
                 setToken(token_first);
+                setIsLoggedIn(true);
+                setUsername(username)
                }else{
                   
                }
@@ -87,11 +89,11 @@ function Login() {
       })
     }
 
-
-   //更改changeAuthMode的状态
-   const changeAuthMode =()=>{
-       setAuthMode(authMode === "signin" ? "signup" : "signin")
-   }
+    //登录成功之后重定向
+    if (isLoggedIn) {
+      return <Redirect to={{ pathname: '/users', state: { username } }} />;
+    }
+ 
     //注册请求
    const handleRegister = (event)=>{
       //阻止冒泡
@@ -136,39 +138,13 @@ function Login() {
       })
    }
 
-
-
-
-    const loggedIn = ()=>{
-       if(!token || token === 'undefined'){
-        return false;
-       }
-       return true;
-    }
-
-    const handleLogout =()=>{
-          //从本地存储中删除token
-          localStorage.removeItem('token');
-          setToken('')
-    }
-    if(authMode === "signin"){
+ 
       return (
         <div className="card">
           <div className="card-body">
-              {loggedIn() ? (
-              <div>
-                <p>You are logged in.</p>
-                <button onClick={handleLogout}>Logout</button>
-              </div>
-            ) :
+             
               <form onSubmit={handleLogin}>
                 <div className="mb-3">
-                  <div className="text-center">
-                    还没有账号吗?{" "}
-                    <span className="link-primary" onClick={changeAuthMode}>
-                       注册
-                    </span>
-                  </div>
                   <label htmlFor="exampleInputEmail1" className="form-label">用户名:</label>
                   <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={username}  onChange={(e)=>{setUsername(e.target.value)}}/>
                   {err ?   <div id="emailHelp" className="form-text">{err}</div> : <div id="emailHelp" className="form-text">我们不会泄露任何您的个人信息</div>}
@@ -181,44 +157,11 @@ function Login() {
                   <input type="password"className="form-control" id="exampleInputPassword1" value={password} onChange={(e)=>{setPassword(e.target.value)}} />
                 </div>
                 <button type="submit" className="btn btn-dark btn-block btn-primary">登录</button> 
-              </form>}
+              </form>
           </div>
         </div>
     )
-    }
-    return (
-      <div className="card">
-        <div className="card-body">
-            {loggedIn() ? (
-            <div>
-              <p>你已经登录,欢迎:{username}</p>
-              <button onClick={handleLogout}>退出</button>
-            </div>
-          ) :
-            <form onSubmit={handleRegister}>
-              <div className="mb-3">
-                <div className="text-center">
-                  已经注册了??{" "}
-                  <span className="link-primary" onClick={changeAuthMode}>
-                     去登录
-                  </span>
-                </div>
-                <label htmlFor="exampleInputEmail1" className="form-label">用户名:</label>
-                <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={username}  onChange={(e)=>{setUsername(e.target.value)}}/>
-                {err ?   <div id="emailHelp" className="form-text">{err}</div> : <div id="emailHelp" className="form-text">我们不会泄露任何您的个人信息</div>}
-               
-                
-               
-              </div>
-              <div className="mb-3">
-                <label htmlFor="exampleInputPassword1" className="form-label">密码:</label>
-                <input type="password"className="form-control" id="exampleInputPassword1" value={password} onChange={(e)=>{setPassword(e.target.value)}} />
-              </div>
-              <button type="submit" className="btn btn-dark btn-block btn-primary">注册</button> 
-            </form>}
-        </div>
-      </div>
-  )
+    
   
 }
 
