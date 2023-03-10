@@ -6,9 +6,7 @@ export default class Home extends Component {
     return (
       <div>
           <h1>首页</h1>
-          <Link to="/login">Log In</Link>
-          <br />
-          <Link to="/register">注册</Link>
+       
       </div>
 
     )

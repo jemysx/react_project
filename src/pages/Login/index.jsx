@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect,withRouter } from 'react-router-dom';
 import axios from 'axios';
 
 //用函数组件进行重构
-function Login() {
-
+function Login(props) {
+ 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [token, setToken] = useState('');
@@ -16,7 +16,7 @@ function Login() {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
   };
-
+  console.log("登录的props",props)
   //创建一个axios实例
   const axiosInstance = axios.create({
     baseURL: 'http://localhost:3000',
@@ -71,10 +71,11 @@ function Login() {
           console.log("再次请求", response)
           if (response.data.result === 'success') {
             alert('登录成功')
-            //设置token
-            setToken(token_first);
+          //登录成功后,设置登录状态为1
             setIsLoggedIn(true);
             setUsername(username)
+            props.history.push("/home");
+
           } else {
 
           }
@@ -90,9 +91,9 @@ function Login() {
   }
 
   //登录成功之后重定向
-  if (isLoggedIn) {
-    return <Redirect to={{ pathname: '/users', state: { username } }} />;
-  }
+  // if (isLoggedIn) {
+  //   return <Redirect to={{ pathname: '/users', state: { username } }} />;
+  // }
 
 
   return (
@@ -121,4 +122,4 @@ function Login() {
 
 }
 
-export default Login;
+export default withRouter(Login);
