@@ -1,7 +1,7 @@
 import React, { Component, useState } from 'react'
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
-function Register() {
+function Register(props) {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -78,6 +78,11 @@ function Register() {
     return <Redirect to="/login" />;
   }
 
+const handleLogin = ()=>{
+  props.history.push("/login");
+}
+
+
   return (
     <div className="card">
       <div className="card-body">
@@ -96,6 +101,7 @@ function Register() {
             <input type="password" className="form-control" id="exampleInputPassword1" value={password} onChange={(e) => { setPassword(e.target.value) }} />
           </div>
           <button type="submit" className="btn btn-dark btn-block btn-primary">注册</button>
+          <button type="submit" className="btn btn-dark btn-block btn-primary" onClick = {handleLogin}>已有账号,去登录</button>
         </form>
       </div>
     </div>

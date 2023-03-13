@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
-import { Redirect,withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import axios from 'axios';
-
 //用函数组件进行重构
 function Login(props) {
  
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [token, setToken] = useState('');
   const [err, setErr] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const config = {
     headers: {
@@ -65,14 +63,14 @@ function Login(props) {
     }, config).then(response => {
       if (response.data.jwt || response.data.jwt !== undefined) {
         localStorage.setItem('token', response.data.jwt)
-        const token_first = response.data.jwt
+        // const token_first = response.data.jwt
         //再次发送请求验证token
         axiosInstance.get('/api1/api/jwt.php').then(function (response) {
           console.log("再次请求", response)
           if (response.data.result === 'success') {
             alert('登录成功')
           //登录成功后,设置登录状态为1
-            setIsLoggedIn(true);
+            // setIsLoggedIn(true);
             setUsername(username)
             props.history.push("/home");
 
@@ -94,10 +92,12 @@ function Login(props) {
   // if (isLoggedIn) {
   //   return <Redirect to={{ pathname: '/users', state: { username } }} />;
   // }
-
+const handleRegister = ()=>{
+  props.history.push("/register");
+}
 
   return (
-    <div className="card">
+    <div className="wrapper">
       <div className="card-body">
         <h1>登录界面</h1>
         <form onSubmit={handleLogin}>
@@ -114,6 +114,8 @@ function Login(props) {
             <input type="password" className="form-control" id="exampleInputPassword1" value={password} onChange={(e) => { setPassword(e.target.value) }} />
           </div>
           <button type="submit" className="btn btn-dark btn-block btn-primary">登录</button>
+          <button type="submit" className="btn btn-dark btn-block btn-primary" onClick = {handleRegister}>还没有账号,去注册</button>
+
         </form>
       </div>
     </div>
