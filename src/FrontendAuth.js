@@ -6,10 +6,11 @@ class FrontendAuth extends Component {
     super(props);
   }
   render() {
+    // console.log(this.props) 
     const { routerConfig, location } = this.props;
     const { pathname } = location;  ///login
     const isLogin = localStorage.getItem("token");
-    console.log('isLogin',isLogin);
+    // console.log('isLogin',isLogin);
     // console.log("this.props",this.props);
     // console.log(location);
     // 如果该路由不用进行权限校验，登录状态下登陆页除外
@@ -18,7 +19,7 @@ class FrontendAuth extends Component {
     const targetRouterConfig = routerConfig.find(
       (item) => item.path === pathname
     );
-    console.log("targetRouterConfig",targetRouterConfig);//{path: '/login', name: 'Login', component: ƒ}
+    // console.log("targetRouterConfig",targetRouterConfig);//{path: '/login', name: 'Login', component: ƒ}
     if (targetRouterConfig && !targetRouterConfig.auth && !isLogin) {
       const { component } = targetRouterConfig;
       return <Route exact path={pathname} component={component} />;
@@ -34,6 +35,7 @@ class FrontendAuth extends Component {
             <Route path={pathname} component={targetRouterConfig.component} />
           );
         } else {
+          // console.log("不合法")
           // 如果路由不合法，重定向到 404 页面
           return <Redirect to="/404" />;
         }

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {Switch,withRouter } from 'react-router-dom';
 import routerMap from './routerMap';
 import FrontendAuth from "./FrontendAuth";

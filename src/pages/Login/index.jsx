@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
-import axios from 'axios';
+
+import api from "../api"
 //用函数组件进行重构
 function Login(props) {
  
@@ -15,36 +16,14 @@ function Login(props) {
     }
   };
   console.log("登录的props",props)
-  //创建一个axios实例
-  const axiosInstance = axios.create({
-    baseURL: 'http://localhost:3000',
-    timeout: 1000
-  });
-
-  //添加一个请求拦截器
-  axiosInstance.interceptors.request.use(
-    config => {
-      const token = localStorage.getItem('token');
-      console.log("拦截器", token);
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
-      return config;
-    },
-    error => {
-      //处理请求错误
-      return Promise.reject(error)
-    }
-  );
-
+ 
 
   //登录请求
   const handleLogin = async (event) => {
 
     //阻止冒泡
     event.preventDefault();
-    console.log("头部信息", config);
-    //做验证
+
 
     //做验证
     if (username.length < 5 || password.length < 5) {
@@ -57,7 +36,7 @@ function Login(props) {
 
 
     //第一次登录请求
-    axiosInstance.post('/api1/api/login.php', {
+    api.post('/api1/api/login.php', {
       username: username,
       password: password
     }, config).then(response => {
@@ -65,8 +44,8 @@ function Login(props) {
         localStorage.setItem('token', response.data.jwt)
         // const token_first = response.data.jwt
         //再次发送请求验证token
-        axiosInstance.get('/api1/api/jwt.php').then(function (response) {
-          console.log("再次请求", response)
+        api.get('/api1/api/jwt.php').then(function (response) {
+          console.log("1", response)
           if (response.data.result === 'success') {
             alert('登录成功')
           //登录成功后,设置登录状态为1

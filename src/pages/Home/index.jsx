@@ -1,14 +1,18 @@
-import React, { Component} from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react'
+import { withRouter } from 'react-router-dom'
+import SwiperList from '../../components/SwiperList'
+import ProductList from './ProductList'
 
-export default class Home extends Component {
-  render() {
+function Home() {
+
     return (
-      <div>
-          <h1>首页</h1>
-       
-      </div>
-
+        <div className="home">
+            <h1>欢迎来到我们的网站！</h1>
+            <SwiperList/>
+            <ProductList />
+        </div>
     )
-  }
+
 }
+
+export default withRouter(Home)

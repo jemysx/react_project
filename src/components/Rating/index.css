@@ -1,0 +1,40 @@
+.g-score, .g-lg-score {
+    font-size: smaller;
+    line-height: 1;
+}
+
+.g-score [data-score^='4']::before, .g-lg-score [data-score^='4']::before {
+    padding-left: 72px;
+}
+.g-score [data-score^='1']::before, .g-lg-score [data-score^='1']::before {
+    padding-left: 20px;
+}
+.g-score [data-score^='2']::before, .g-lg-score [data-score^='2']::before {
+    padding-left: 38px;
+}
+.g-score [data-score^='3']::before, .g-lg-score [data-score^='3']::before {
+    padding-left: 55px;
+}
+.g-score [data-score^='5']::before, .g-lg-score [data-score^='']::before {
+    padding-left: 90px;
+}
+.g-score [data-score]::before {
+    height: 16px;
+    content: '';
+    background-size: auto 100%;
+}
+
+.g-score [data-score]::before {
+    box-sizing: content-box;
+    background-image: url(https://www.nitori-net.jp/ec/_ui/responsive/common/images/parts/star_on.svg);
+}
+.g-score [data-score]::before, .g-score [data-score]::after, .g-lg-score [data-score]::before, .g-lg-score [data-score]::after {
+    height: 16px;
+    content: '';
+    background-size: auto 100%;
+}
+.g-score [data-score]::after, .g-lg-score [data-score]::after {
+    background-image: url(https://www.nitori-net.jp/ec/_ui/responsive/common/images/parts/star_off.svg);
+    background-position: 100% center;
+    flex: 1 1;
+}
