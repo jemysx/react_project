@@ -1,0 +1,17 @@
+.g-gnav {
+    background-color: #e6e6e6;
+}
+.g-gnav_outer {
+    width: 100%;
+    max-width: 1240px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+.g-gnav_inner {
+    display: flex;
+    height: 50px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}

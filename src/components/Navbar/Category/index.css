@@ -1,0 +1,32 @@
+.g-gnav_category {
+    width: 100%;
+    height: 100%;
+    margin-top: 0px;
+}
+
+button.g-gnav_btn {
+    background-color: #f0f0f0;
+}
+.g-gnav_categoryBtn {
+    width: 240px;
+    justify-content: center;
+}
+.g-gnav_btn {
+    display: flex;
+    height: 100%;
+    padding: 0 15px;
+    border-width: 0;
+    align-items: center;
+}
+
+button {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    color: inherit;
+}
+.g-s-category {
+    background-position: -4em -4em;
+}
+

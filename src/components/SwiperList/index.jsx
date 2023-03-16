@@ -13,13 +13,6 @@ import './index.css'
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 const MySwiper = () => {
-    // const [slides, setSlides] = useState([]);
-
-    // const products = [
-    //     { id: 1, img: 'https://www.nitori-net.jp/ecstatic/include/feature/img19/bed-combine/bed/chest/TopTk_bnr_cmpc.jpg', links: "http://www.baidu.com" },
-    //     { id: 2, img: 'https://www.nitori-net.jp/ecstatic/include/feature/img21/rakukaji/TopTk_bnr_cmpc.jpg', links: "http://www.baidu.com" },
-    //     { id: 3, img: 'https://www.nitori-net.jp/ecstatic/include/feature/img21/pollengoods/TopTk_bnr_pc.jpg', links: "/home/productList/productDetail" }
-    // ];
 
     // 创建一个 axios 实例
     const api = axios.create({
