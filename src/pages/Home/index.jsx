@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import Navibar from '../../components/Navbar'
 import SwiperList from '../../components/SwiperList'
 import ProductList from './ProductList'
-
+import './index.css'
 function Home() {
 
     return (

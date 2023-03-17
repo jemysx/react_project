@@ -1,6 +1,7 @@
 .g-gnav {
     background-color: #e6e6e6;
 }
+
 .g-gnav_outer {
     width: 100%;
     max-width: 1240px;
@@ -9,9 +10,20 @@
     padding-right: 20px;
     padding-left: 20px;
 }
+
 .g-gnav_inner {
     display: flex;
     height: 50px;
     justify-content: flex-end;
     flex-wrap: wrap;
+}
+
+.navbar-container {
+    display: flex;
+    align-items: center;
+    background-color: #e2dcdc;
+    color: #fff;
+    padding: 10px 20px;
+    font-family: 'Arial', sans-serif;
+    z-index: 3;
 }

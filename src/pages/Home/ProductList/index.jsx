@@ -19,7 +19,7 @@ function ProductList() {
       try {
         // 调用验证token的api
         const tokenResponse = await api.get('/api1/api/jwt.php');
-        console.log("tkne", tokenResponse)
+        // console.log("tkne", tokenResponse)
         if (tokenResponse.status === 200) {
           // 如果token验证通过，则请求商品列表
           const productListResponse = await api.get('/api1/api/shopList.php');
@@ -60,7 +60,7 @@ function ProductList() {
 
 
                 {products.map((item) => {
-                  console.log(item);
+                  // console.log(item);
                   return (
                     <ProductCard key={item.id} product={item} />
                   )

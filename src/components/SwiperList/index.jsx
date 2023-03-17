@@ -28,7 +28,7 @@ const MySwiper = () => {
             try {
                 // 替换为实际的API URL
                 const SwiperListResponse = await api.get('/api1/api/SwiperList.php');
-                console.log('SwiperList',SwiperListResponse)
+                // console.log('SwiperList',SwiperListResponse)
                 //    const data = await response.json();
                    setSlides(SwiperListResponse.data);
                    setLoading(false);

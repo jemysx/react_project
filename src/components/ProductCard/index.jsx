@@ -4,7 +4,7 @@ import Rating from "../Rating";
 import './index.css'
 
 function ProductCard({ product }) {
-    console.log("productCard", product);
+    // console.log("productCard", product);
     return (
         <li key={product.id} className="g-grid_item g-carousel_slide swiper-slide_cls">
             <div id="handlebarsSectionRecommendProd_0" 

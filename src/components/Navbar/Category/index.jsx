@@ -1,39 +1,96 @@
-import React ,{useState}from 'react'
+import React, { useState,useEffect } from 'react'
+import CategoryItem from './CategoryItem';
+import axios from 'axios';
 import './index.css'
+
+
+
 
 function Category() {
 
-    const [categoryState, setCategoryState] = useState(false)
+    const [activeIndex, setActiveIndex] = useState(0);
+    const [isActive, setIsActive] = useState(false)
+    const [categoryList, setCategoryList] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+
+     // 创建一个 axios 实例
+     const api = axios.create({
+        baseURL: 'http://localhost:3000',
+        timeout: 1000
+    });
+    //发送请求
+   
+    useEffect(() => {
+        // 获取数据的函数
+        const fetchData = async () => {
+            try {
+                // 替换为实际的API URL
+                const CategoryListResponse = await api.get('/api1/api/CategoryList.php');
+                console.log('CategoryListResponse',CategoryListResponse)
+                //    const data = await response.json();
+                   setCategoryList(CategoryListResponse.data);
+                   setLoading(false);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
+    if (loading) {
+        return <p>Loading...</p>;
+      }
+
+
+
 
 
     return (
-        <div className="g-gnav_category">
 
-            <button className="g-gnav_btn g-gnav_categoryBtn" type="button" aria-haspopup="false" aria-expanded="false" aria-controls="g-gcategory" data-breakpoints="wide" data-attr='{"wide":{"aria-haspopup":true}}' onMouseEnter={() => { setCategoryState(true) }} onMouseLeave={() => setCategoryState(false)}><i className="g-s g-s-category" aria-hidden="true"></i>カテゴリ<i className="fas fa-chevron-down" aria-hidden="true"></i></button>
 
-            {categoryState ? <div className="g-gcategory" id="g-gcategory" aria-hidden="true" data-breakpoints="wide">
 
-<ul className="g-gcategory_el" data-accordion-group>
-    <li className="g-gcategory_item">
-        <div className="g-gcategory_head"><a className="g-gcategory_name" href="/ec/cat/Bed/" aria-expanded="false" aria-controls="g-gcategory_Bed"><span><img className="lozad" src="https://www.nitori-net.jp/ecstatic/image/sys-master/images/8993449607198/Bed.jpg" alt="" width="31" height="31" />ベッド</span><i className="g-i g-i-arrow-d" aria-hidden="true"></i></a>
-        </div>
-        <div className="g-gcategory_children" id="g-gcategory_Bed" aria-hidden="true">
-            <p className="g-gcategory_h"><a className="g-hover"  href="/ec/cat/Bed/"><img className="lozad" src="https://www.nitori-net.jp/ecstatic/image/sys-master/images/8993449607198/Bed.jpg" alt="" width="120" height="120" />ベッド<i className="g-i g-i-arrow-r" aria-hidden="true"></i></a></p>
-            <p className="g-gcategory_more">
-                <a href="/ec/cat/Bed/">
-                    <span>ベッド&nbsp;カテゴリを見る</span>
-                    <i className="g-i g-i-arrow-r" aria-hidden="true"></i>
-                </a>
-            </p>
-            <ul className="g-gcategory_list">
-                <li><a href="/ec/cat/Bed/BedFrameStorage/1/">収納付きベッド</a></li>
-                <li><a  href="/ec/cat/Bed/BedFrameDrainboard/1/">すのこベッド</a></li>
-            </ul>
-        </div>
-    </li>
-</ul>
-</div> : <></>}
-          
+        <div className='g-gnav_category' onMouseEnter={() => { setIsActive(true) }} onMouseLeave={() => { setIsActive(false) }}>
+            <div className="g-gnav_btn g-gnav_categoryBtn" >
+                <i className='g-s g-s-category'>
+                </i>
+                <span className='kategodi'>
+                    カテゴリ
+                </span>
+
+            </div>
+            {isActive && (
+                <>
+                    <div className="g-gcategory" data-breakpoints='wide'>
+                        <ul className='g-gcategory_el' data-accordion-group data-accordion-group-active='true'>
+
+                            {categoryList.map((category, index) => (
+                                <li
+                                    key={index}
+                                    
+                                    onMouseEnter={() => setActiveIndex(index)}
+                                >
+                                    <div className='g-gcategory_head'>
+                                        <a href="" className={`g-gcategory_name${index === activeIndex ? ' active' : ''}`}>
+                                            <span>
+                                                {category.title}
+                                            </span>
+                                        </a>
+                                    </div>
+
+                                    <CategoryItem category={categoryList[activeIndex]} />
+                                </li>
+                            ))}
+                        </ul>
+
+
+                    </div>
+                </>
+            )}
+
+
+
+
         </div>
     )
 
